@@ -1,4 +1,5 @@
 using System;
+using My_DOTS_Test_Proj.Scripts.Root;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -51,6 +52,8 @@ namespace My_DOTS_Test_Proj.Scripts.Components.System
                 });
 
                 OnShoot?.Invoke(entity, EventArgs.Empty);
+
+                PlayerShootManager.Instance.PlayerShoot(localTransform.ValueRO.Position);
             }
 
             entityCommandBuffer.Playback(EntityManager);

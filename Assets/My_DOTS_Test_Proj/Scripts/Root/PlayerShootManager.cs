@@ -8,23 +8,39 @@ namespace My_DOTS_Test_Proj.Scripts.Root
 {
     public class PlayerShootManager : MonoBehaviour
     {
+        public static PlayerShootManager Instance { get; private set; }
+
         [SerializeField] private GameObject _shootPopupPrefab;
-        private void Start()
+
+
+        private void Awake()
         {
-            PlayerShootingSystem playerShootingSystem =
-             World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<PlayerShootingSystem>();
-
-
-            playerShootingSystem.OnShoot += PlayerShootingSystem_OnShoot;
+            Instance = this;
         }
 
 
-        private void PlayerShootingSystem_OnShoot(object sender, EventArgs e)
+        public void PlayerShoot(Vector3 playerPosition)
         {
-            Entity playerEntity = (Entity)sender;
-            LocalTransform localTransform =
-             World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentData<LocalTransform>(playerEntity);
-            Instantiate(_shootPopupPrefab, localTransform.Position, Quaternion.identity);
+            Instantiate(_shootPopupPrefab, playerPosition, Quaternion.identity);
         }
+
+
+        // private void Start()
+        // {
+        //     PlayerShootingSystem playerShootingSystem =
+        //      World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<PlayerShootingSystem>();
+
+
+        //     playerShootingSystem.OnShoot += PlayerShootingSystem_OnShoot;
+        // }
+
+
+        // private void PlayerShootingSystem_OnShoot(object sender, EventArgs e)
+        // {
+        //     Entity playerEntity = (Entity)sender;
+        //     LocalTransform localTransform =
+        //      World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentData<LocalTransform>(playerEntity);
+        //     Instantiate(_shootPopupPrefab, localTransform.Position, Quaternion.identity);
+        // }
     }
 }
