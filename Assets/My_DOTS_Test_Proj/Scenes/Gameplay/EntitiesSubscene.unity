@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubePrefab: {fileID: 298528672797762523, guid: 528fe803826bdc949891c12af78508fe, type: 3}
-  AmountToSpawn: 10
+  AmountToSpawn: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

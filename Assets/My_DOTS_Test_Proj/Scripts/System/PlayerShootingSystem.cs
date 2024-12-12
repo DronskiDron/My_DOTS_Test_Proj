@@ -1,3 +1,4 @@
+using System;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -7,6 +8,9 @@ namespace My_DOTS_Test_Proj.Scripts.Components.System
 {
     public partial class PlayerShootingSystem : SystemBase
     {
+        public event EventHandler OnShoot;
+
+
         protected override void OnCreate()
         {
             RequireForUpdate<Player>();
@@ -35,8 +39,8 @@ namespace My_DOTS_Test_Proj.Scripts.Components.System
 
             EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
 
-            foreach (RefRO<LocalTransform> localTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>()
-            .WithDisabled<Stunned>())
+            foreach ((RefRO<LocalTransform> localTransform, Entity entity) in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>()
+            .WithDisabled<Stunned>().WithEntityAccess())
             {
                 Entity spawnedEntity = entityCommandBuffer.Instantiate(spawnCubesConfig.CubePrefabEntity);
                 entityCommandBuffer.SetComponent(spawnedEntity, new LocalTransform
@@ -45,6 +49,8 @@ namespace My_DOTS_Test_Proj.Scripts.Components.System
                     Rotation = quaternion.identity,
                     Scale = 1f
                 });
+
+                OnShoot?.Invoke(entity, EventArgs.Empty);
             }
 
             entityCommandBuffer.Playback(EntityManager);

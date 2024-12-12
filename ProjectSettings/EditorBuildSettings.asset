@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/My_DOTS_Test_Proj/Scenes/Gameplay/Gameplay.unity
+    guid: 9b11f04de3927ef42be6aeac836eaea7
   m_configObjects: {}
